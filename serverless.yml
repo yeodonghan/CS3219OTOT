@@ -27,24 +27,8 @@ provider:
 
 functions:
   hello:
-    handler: ./OTOT_Task_B_Api_Server/handler.hello
+    handler: handler.hello
     events:
       - http: ANY /{proxy+}
       - http: ANY /
-#   environment:
 
-#    Define function environment variables here
-#    environment:
-#      variable2: value2
-
-# you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
