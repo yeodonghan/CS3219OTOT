@@ -32,31 +32,36 @@ const EditForm = ({
     const submitContactHandler = (e) => {
         e.preventDefault();
         const url = "http://localhost:8080/api/contacts/"
-        let formData = {
-            name: inputTextName,
-            phone: inputTextPhone,
-            email: inputTextEmail,
-            gender: inputTextGender
+        if(inputTextName === "" || inputTextEmail === "" || inputTextPhone === "" || inputTextGender === "" ) {
+            alert("Please fill in all fields!")
+        } else {
+            let formData = {
+                name: inputTextName,
+                phone: inputTextPhone,
+                email: inputTextEmail,
+                gender: inputTextGender
+            }
+            
+            axios.put(url+`${contactId}`, formData)
+                .then(response => {
+                    console.log(response);
+                    axios.get(url)
+                        .then(res => {
+                        const users = res.data;
+                        setContacts(users.data);
+                        console.log(users.data);
+                    })
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+            
+            setInputTextName("");
+            setInputTextEmail("");
+            setInputTextPhone("");
+            setModalIsOpen(false);
         }
         
-        axios.put(url+`${contactId}`, formData)
-            .then(response => {
-                console.log(response);
-                axios.get(url)
-                    .then(res => {
-                    const users = res.data;
-                    setContacts(users.data);
-                    console.log(users.data);
-                })
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        
-        setInputTextName("");
-        setInputTextEmail("");
-        setInputTextPhone("");
-        setModalIsOpen(false);
     };
 
     const cancelEditHandler = () =>{
@@ -69,8 +74,7 @@ const EditForm = ({
             <Card.Body>
             <Form
             id='myForm'
-            className="form"
-            onSubmit={ submitContactHandler }>
+            className="form">
                 
                 <Form.Group className="mb-3" controlId="formBasicName" value={inputTextName} onChange={inputTextNameHandler}>
                     <Form.Label>Name</Form.Label>

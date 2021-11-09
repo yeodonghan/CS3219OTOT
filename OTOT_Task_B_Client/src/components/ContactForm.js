@@ -31,30 +31,35 @@ const ContactForm = ({
     const submitContactHandler = (e) => {
         e.preventDefault();
         const url = "http://localhost:8080/api/contacts/"
-        let formData = {
-            name: inputTextName,
-            phone: inputTextPhone,
-            email: inputTextEmail,
-            gender: inputTextGender
+        if(inputTextName === "" || inputTextEmail === "" || inputTextPhone === "" || inputTextGender === "" ) {
+            alert("Please fill in all fields!")
+        } else {
+            let formData = {
+                name: inputTextName,
+                phone: inputTextPhone,
+                email: inputTextEmail,
+                gender: inputTextGender
+            }
+        
+            axios.post(url, formData)
+                .then(response => {
+                    console.log(response);
+                    axios.get(url)
+                        .then(res => {
+                        const users = res.data;
+                        setContacts(users.data);
+                        console.log(users.data);
+                    })
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+            
+            setInputTextName("");
+            setInputTextEmail("");
+            setInputTextPhone("");
         }
         
-        axios.post(url, formData)
-            .then(response => {
-                console.log(response);
-                axios.get(url)
-                    .then(res => {
-                    const users = res.data;
-                    setContacts(users.data);
-                    console.log(users.data);
-                })
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        
-        setInputTextName("");
-        setInputTextEmail("");
-        setInputTextPhone("");
     };
 
 
