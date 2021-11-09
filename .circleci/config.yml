@@ -8,6 +8,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./OTOT_Task_B_Api_Server
+      - run: cd OTOT_Task_B_Api_Server
       - run:
           name: Install npm dependencies
           command: |
