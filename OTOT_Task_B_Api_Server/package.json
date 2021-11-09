@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "npx mocha --exit"
+    "test": "npx mocha --exit",
+    "deploy": "serverless deploy"
   },
   "keywords": [
     "api",
@@ -19,7 +20,8 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^6.0.12"
+    "mongoose": "^6.0.12",
+    "serverless-http": "^2.7.0"
   },
   "devDependencies": {
     "chai": "^4.3.4",
