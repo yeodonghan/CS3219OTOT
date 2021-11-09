@@ -6,14 +6,20 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
-      - run: cd OTOT_Task_B_Api_Server
       - run:
           name: Install npm dependencies
           command: |
+            cd OTOT_Task_B_Api_Server
             npm install --save
-      - run: mkdir ~/junit
       - run:
-          command: npx mocha test --reporter mocha-junit-reporter
+          name: Make directory
+          command: |
+            cd OTOT_Task_B_Api_Server
+            mkdir ~/junit
+      - run:
+          command: |
+            cd OTOT_Task_B_Api_Server
+            npx mocha test --reporter mocha-junit-reporter
           environment:
             MOCHA_FILE: ~/junit/test-results.xml
           when: always
