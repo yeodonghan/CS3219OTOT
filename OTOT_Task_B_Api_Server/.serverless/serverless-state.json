@@ -8,7 +8,7 @@
       "name": "aws",
       "runtime": "nodejs12.x",
       "memorySize": 2048,
-      "stage": "dev",
+      "stage": "deploy",
       "timeout": 15,
       "region": "ap-southeast-1",
       "lambdaHashingVersion": "20201221",
@@ -89,7 +89,7 @@
           "HelloLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/otot-dev-hello"
+              "LogGroupName": "/aws/lambda/otot-deploy-hello"
             }
           },
           "IamRoleLambdaExecution": {
@@ -118,7 +118,7 @@
                       "-",
                       [
                         "otot",
-                        "dev",
+                        "deploy",
                         "lambda"
                       ]
                     ]
@@ -134,7 +134,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/otot-dev*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/otot-deploy*:*"
                           }
                         ]
                       },
@@ -145,7 +145,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/otot-dev*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/otot-deploy*:*:*"
                           }
                         ]
                       }
@@ -159,7 +159,7 @@
                   "-",
                   [
                     "otot",
-                    "dev",
+                    "deploy",
                     {
                       "Ref": "AWS::Region"
                     },
@@ -222,11 +222,11 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/otot/dev/1636469089274-2021-11-09T14:44:49.274Z/otot.zip"
+                "S3Key": "serverless/otot/deploy/1636475547316-2021-11-09T16:32:27.316Z/otot.zip"
               },
               "Handler": "s_hello.handler",
               "Runtime": "nodejs12.x",
-              "FunctionName": "otot-dev-hello",
+              "FunctionName": "otot-deploy-hello",
               "MemorySize": 2048,
               "Timeout": 15,
               "Role": {
@@ -240,20 +240,20 @@
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersionA4bUVVUTv3TMXsVVP3I6ZBoyYYWcHLswrzvdVVuVBOk": {
+          "HelloLambdaVersionY4XDe8M7KEe59qIyYNlXmmoSNinHHbkEjWyzEWd52hw": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "RgHgEcffbMffz0ON/vnXj9qV/NXLMXzw9C8EZuqtqDE="
+              "CodeSha256": "1hUb2DxykePewXV9SCmv7vINbZPlkMclqjH82TeP1I8="
             }
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-              "Name": "dev-otot",
+              "Name": "deploy-otot",
               "EndpointConfiguration": {
                 "Types": [
                   "EDGE"
@@ -372,13 +372,13 @@
               "HelloLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1636469081603": {
+          "ApiGatewayDeployment1636475537244": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               },
-              "StageName": "dev"
+              "StageName": "deploy"
             },
             "DependsOn": [
               "ApiGatewayMethodProxyVarAny",
@@ -425,7 +425,7 @@
           "ApiGatewayLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/api-gateway/otot-dev"
+              "LogGroupName": "/aws/api-gateway/otot-deploy"
             }
           },
           "CustomApiGatewayAccountCloudWatchRole": {
@@ -465,7 +465,7 @@
                     "Fn::Join": [
                       "-",
                       [
-                        "dev",
+                        "deploy",
                         "otot",
                         "custom-resources-lambda"
                       ]
@@ -531,9 +531,9 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/otot/dev/1636469089274-2021-11-09T14:44:49.274Z/custom-resources.zip"
+                "S3Key": "serverless/otot/deploy/1636475547316-2021-11-09T16:32:27.316Z/custom-resources.zip"
               },
-              "FunctionName": "otot-dev-custom-resource-apigw-cw-role",
+              "FunctionName": "otot-deploy-custom-resource-apigw-cw-role",
               "Handler": "apiGatewayCloudWatchRole/handler.handler",
               "MemorySize": 1024,
               "Runtime": "nodejs12.x",
@@ -552,7 +552,7 @@
           "CWLSubFilterHelloLogGroupApSoutheast1": {
             "Type": "AWS::Logs::SubscriptionFilter",
             "Properties": {
-              "DestinationArn": "arn:aws:logs:ap-southeast-1:802587217904:destination:966be632-07a0-4266-bb7a-08abb111790c#SC50fFfcyZ10N5P6Bq#otot#dev",
+              "DestinationArn": "arn:aws:logs:ap-southeast-1:802587217904:destination:966be632-07a0-4266-bb7a-08abb111790c#SC50fFfcyZ10N5P6Bq#otot#deploy",
               "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
               "LogGroupName": {
                 "Ref": "HelloLogGroup"
@@ -562,7 +562,7 @@
           "CWLSubFilterApiGatewayLogGroupApSoutheast1": {
             "Type": "AWS::Logs::SubscriptionFilter",
             "Properties": {
-              "DestinationArn": "arn:aws:logs:ap-southeast-1:802587217904:destination:966be632-07a0-4266-bb7a-08abb111790c#SC50fFfcyZ10N5P6Bq#otot#dev",
+              "DestinationArn": "arn:aws:logs:ap-southeast-1:802587217904:destination:966be632-07a0-4266-bb7a-08abb111790c#SC50fFfcyZ10N5P6Bq#otot#deploy",
               "FilterPattern": "\"SLS_ACCESS_LOG\"",
               "LogGroupName": {
                 "Ref": "ApiGatewayLogGroup"
@@ -576,7 +576,7 @@
               "Ref": "ServerlessDeploymentBucket"
             },
             "Export": {
-              "Name": "sls-otot-dev-ServerlessDeploymentBucketName"
+              "Name": "sls-otot-deploy-ServerlessDeploymentBucketName"
             }
           },
           "EnterpriseLogAccessIamRole": {
@@ -587,16 +587,16 @@
               ]
             },
             "Export": {
-              "Name": "sls-otot-dev-EnterpriseLogAccessIamRole"
+              "Name": "sls-otot-deploy-EnterpriseLogAccessIamRole"
             }
           },
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionA4bUVVUTv3TMXsVVP3I6ZBoyYYWcHLswrzvdVVuVBOk"
+              "Ref": "HelloLambdaVersionY4XDe8M7KEe59qIyYNlXmmoSNinHHbkEjWyzEWd52hw"
             },
             "Export": {
-              "Name": "sls-otot-dev-HelloLambdaFunctionQualifiedArn"
+              "Name": "sls-otot-deploy-HelloLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -617,12 +617,12 @@
                   {
                     "Ref": "AWS::URLSuffix"
                   },
-                  "/dev"
+                  "/deploy"
                 ]
               ]
             },
             "Export": {
-              "Name": "sls-otot-dev-ServiceEndpoint"
+              "Name": "sls-otot-deploy-ServiceEndpoint"
             }
           }
         }
@@ -728,18 +728,20 @@
             "http": "ANY /"
           }
         ],
-        "name": "otot-dev-hello",
+        "name": "otot-deploy-hello",
         "package": {},
         "memory": 2048,
         "timeout": 15,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionA4bUVVUTv3TMXsVVP3I6ZBoyYYWcHLswrzvdVVuVBOk"
+        "versionLogicalId": "HelloLambdaVersionY4XDe8M7KEe59qIyYNlXmmoSNinHHbkEjWyzEWd52hw"
       }
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yml",
     "initialServerlessConfig": {
+      "org": "yeodonghan",
+      "app": "otot",
       "service": {
         "$ref": "$[\"service\"][\"serviceObject\"]"
       },
@@ -749,9 +751,7 @@
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
-      },
-      "org": "yeodonghan",
-      "app": "otot"
+      }
     },
     "app": "otot",
     "org": "yeodonghan",
@@ -763,7 +763,7 @@
     "artifact": "C:\\Users\\Dong Han\\Desktop\\CS3219\\OTOT\\OTOT_Task_B_Api_Server\\.serverless\\otot.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/otot/dev/1636469089274-2021-11-09T14:44:49.274Z",
+    "artifactDirectoryName": "serverless/otot/deploy/1636475547316-2021-11-09T16:32:27.316Z",
     "artifact": "otot.zip"
   }
 }
