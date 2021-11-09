@@ -6,7 +6,8 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
-      - run: cd OTOT_Task_B_Api_Server
+      - attach_workspace:
+          at: ./OTOT_Task_B_Api_Server
       - run:
           name: Install npm dependencies
           command: |
