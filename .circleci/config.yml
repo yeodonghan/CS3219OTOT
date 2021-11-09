@@ -13,7 +13,7 @@ jobs:
             npm install --save
       - run: mkdir ~/junit
       - run:
-          command: npx mocha test --true
+          command: npx mocha test --reporter mocha-junit-reporter
           environment:
             MOCHA_FILE: ~/junit/test-results.xml
           when: always
