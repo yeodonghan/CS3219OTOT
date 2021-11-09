@@ -1,24 +1,28 @@
 version: 2.1
+
 jobs:
   run_tests:
     docker:
-      -image: circleci/node:10
+      - image: circleci/node:10
     steps:
       - checkout
+      - run: cd OTOT_Task_B_Api_Server
       - run:
-        name: Install npm dependencies
-        command: |
-          cd OTOT_Task_B_Api_Server
-          npm install --save
+          name: Install npm dependencies
+          command: |
+            npm install --save
+      - run: mkdir ~/junit
       - run:
-        name: Run unit test
-        command: |
-          ./node_modules/mocha/bin/mocha test/ --reporter mochawesome --reporter-option reportDir=test-results,reportFilename=test-results
+          command: npx mocha test --true
+          environment:
+            MOCHA_FILE: ~/junit/test-results.xml
+          when: always
       - store_test_results:
-        path: test-results
+          path: ~/junit
       - store_artifacts:
-        path: test-results
+          path: ~/junit
+
 workflows:
   build_test:
     jobs:
-      - runtests
+      - run_tests
