@@ -13,8 +13,8 @@ exports.index = function (req, res) {
                 message: err,
             });
         }
-        res.json({
-            status: "success",
+        res.status(200).json({
+            status: 200,
             message: "Contacts retrieved successfully",
             data: contacts
         });
@@ -24,7 +24,7 @@ exports.index = function (req, res) {
 // Handle create contact actions
 exports.new = function (req, res) {
     var contact = new Contact();
-    contact.name = req.body.name ? req.body.name : contact.name;
+    contact.name = req.body.name;
     contact.gender = req.body.gender;
     contact.email = req.body.email;
     contact.phone = req.body.phone;
@@ -32,7 +32,8 @@ exports.new = function (req, res) {
     contact.save(function (err) {
         // if (err)
         //     res.json(err);
-    res.json({
+    res.status(201).json({
+                status: 201,
                 message: 'New contact created!',
                 data: contact
             });
@@ -41,12 +42,15 @@ exports.new = function (req, res) {
 // Handle view contact info
 exports.view = function (req, res) {
     Contact.findById(req.params.contact_id, function (err, contact) {
-        if (err)
-            res.send(err);
-        res.json({
-            message: 'Contact details loading..',
-            data: contact
-        });
+        if (err) {
+            res.status(404).send(err);
+        } else {
+            res.status(200).json({
+                status: 200,
+                message: 'Contact details loading..',
+                data: contact
+            });
+        }
     });
 };
 // Handle update contact info
@@ -54,7 +58,7 @@ exports.update = function (req, res) {
 Contact.findById(req.params.contact_id, function (err, contact) {
         if (err)
             res.send(err);
-        contact.name = req.body.name ? req.body.name : contact.name;
+        contact.name = req.body.name;
         contact.gender = req.body.gender;
         contact.email = req.body.email;
         contact.phone = req.body.phone;
@@ -63,7 +67,7 @@ Contact.findById(req.params.contact_id, function (err, contact) {
         contact.save(function (err) {
             if (err)
                 res.json(err);
-            res.json({
+            res.status(200).json({
                 message: 'Contact Info updated',
                 data: contact
             });

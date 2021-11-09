@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "mocha"
   },
   "keywords": [
     "api",
@@ -19,5 +20,11 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^6.0.12"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "mocha": "^9.1.3",
+    "mochawesome": "^7.0.1"
   }
 }

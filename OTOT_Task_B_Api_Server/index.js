@@ -39,6 +39,6 @@ app.use('/api', apiRoutes)
 app.get('/', (req, res) => res.send('Hello World with Express'));
 
 // Launch app to listen to specified port
-app.listen(port, function () {
+module.exports = app.listen(port, function () {
      console.log("Running Server on port " + port);
 });
