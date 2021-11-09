@@ -20,7 +20,7 @@ describe("Get specific API", () => {
                     response.body.data.should.be.a("array");
                 done();
                 })
-        })
+        }).timeout(4000)
         it("It should get 404 if api is incorrect", (done) => {
             chai.request(server)
                 .get("/api/contact")
